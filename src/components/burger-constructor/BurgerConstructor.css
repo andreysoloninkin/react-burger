@@ -1,0 +1,33 @@
+.constructor-list{
+    /*border:1px dotted red;*/
+    width: 100%;
+    height: 200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    /*display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;*/
+}
+.constructor-item{
+    /*position:relative;*/
+    /*border:1px dotted yellow;*/
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.constructor-item.dragable{
+
+}
+
+.constructor-item .drag-space{
+    display:block;
+    width:32px;
+}
+
+.constructor-total{
+    display:flex;
+    align-items: center;
+    justify-content: flex-end;
+}

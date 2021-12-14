@@ -1,0 +1,37 @@
+header nav{
+    width:1280px;
+    /*padding:16px 0;*/
+    /*border:1px dotted #666666;*/
+    display: flex;
+    justify-content: space-between;
+}
+
+header nav>div{
+    display: flex;
+    width:calc(100%/3);
+    justify-content:center;
+}
+header nav>div:first-child{
+    justify-content: flex-start;
+}
+header nav>div:last-child{
+    justify-content: flex-end;
+}
+header nav ul{
+    margin:0;
+    padding:0;
+    display: flex;
+}
+header nav ul>li{
+    display: flex;
+    list-style-type: none;
+    padding: 16px 20px;
+    border-radius: 29px;
+    vertical-align: middle;
+    align-items: center;
+    border:1px dotted #ffffff;
+}
+
+header nav ul>li>span{
+    
+}
