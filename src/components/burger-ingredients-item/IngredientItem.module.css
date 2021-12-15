@@ -1,4 +1,4 @@
-.ingredient-item{
+.ingredient_item{
     width:272px;
     min-height:208px;
     /*border:1px dotted green;*/
@@ -7,13 +7,16 @@
     flex-direction: column;
     justify-content: center;
 }
-.ingredient-price{
+.ingredient_price{
     display:flex;
     align-items: center;
     justify-content: center;
 }
-.ingredient-title{
+.ingredient_title{
     text-align: center;
     height:48px;
     text-overflow: ellipsis;
+}
+.ingredient_pic{
+    
 }

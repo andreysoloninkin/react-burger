@@ -4,6 +4,7 @@
   align-content: flex-start;*/
 }
 
+/*
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -15,16 +16,7 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 88px;/*100vh;*/
-  display: flex;
-  /*flex-direction: column;*/
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+
 
 .App-link {
   color: #61dafb;
@@ -38,23 +30,12 @@
     transform: rotate(360deg);
   }
 }
-
+*/
 
 main {
-  /*border:1px dotted #666666;*/
+  /*border:1px dotted red;*/
   display: flex;
   align-items: flex-start;
   justify-content: center;
-}
-
-.Burger-ingredients{
-  width:600px;
-  /*border:1px dotted #61dafb;*/
-  text-align: left;
-}
-
-.Burger-constructor{
-  width:600px;
-  /*border:1px dotted #61dafb;*/
-  text-align: left;
+  height:calc(100vh - 90px);
 }

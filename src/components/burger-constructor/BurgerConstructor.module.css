@@ -1,7 +1,14 @@
-.constructor-list{
+.Burger_constructor{
+    width:600px;
+    height:calc(100% - 100px);
+    /*border:1px dotted #61dafb;*/
+    text-align: left;
+  }
+  
+.constructor_list{
     /*border:1px dotted red;*/
     width: 100%;
-    height: 200px;
+    height: calc(100% - 340px);
     overflow-y: scroll;
     overflow-x: hidden;
     /*display: flex;
@@ -9,7 +16,7 @@
     flex-wrap: wrap;
     gap: 10px;*/
 }
-.constructor-item{
+.constructor_item{
     /*position:relative;*/
     /*border:1px dotted yellow;*/
     display:flex;
@@ -17,16 +24,16 @@
     align-items: center;
 }
 
-.constructor-item.dragable{
+.constructor_item.dragable{
 
 }
 
-.constructor-item .drag-space{
+.constructor_item .drag_space{
     display:block;
     width:32px;
 }
 
-.constructor-total{
+.constructor_total{
     display:flex;
     align-items: center;
     justify-content: flex-end;

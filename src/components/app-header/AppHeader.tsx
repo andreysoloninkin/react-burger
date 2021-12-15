@@ -8,7 +8,7 @@ import './AppHeader.module.css';
 
 function AppHeader() {
   return (
-      <header className="App-header">
+      <header>
         <nav className="pt-4 pb-4">
           <div>
             <ul>
