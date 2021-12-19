@@ -7,14 +7,14 @@ import CurrencyIconCustom from '../CurrencyIconCustom/CurrencyIconCustom';
 import styles from './BurgerConstructor.module.css';
 
 function BurgerConstructor(props) {
-  console.log('BurgerConstructor');
-  console.log(props);
+  //console.log('BurgerConstructor');
+  //console.log(props);
 
   const items = props.order;
-  console.log(items[0]);
+  //console.log(items[0]);
 
   const j = items.length;
-  console.log(j);
+  //console.log(j);
 
   const itemtop = items[0];
   const itembot = items[j-1];
@@ -42,7 +42,7 @@ function BurgerConstructor(props) {
       }
 
       <div className={`${styles.constructor_total} pt-10 pb-1 pr-4`}>
-        <span className="text text_type_digits-medium mr-2">610</span>
+        <span className="text text_type_digits-medium mr-2"></span>
         <CurrencyIconCustom size="32" color="#ffffff" className="mr-10"/>
         <Button type="primary" size="large">Оформить заказ</Button>
       </div>

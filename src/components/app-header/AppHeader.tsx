@@ -6,7 +6,7 @@ import {ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import logoimg from '../../images/logo.png';
 import './AppHeader.module.css';
 
-function AppHeader() {
+function AppHeader(){
   return (
       <header>
         <nav className="pt-4 pb-4">
