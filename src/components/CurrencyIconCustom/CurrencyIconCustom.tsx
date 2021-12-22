@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function CurrencyIconCustom(props)
 {
-  const viewbox = "0 0 "+props.size+" "+props.size;
+  //const viewbox = "0 0 "+props.size+" "+props.size;
+  //console.log(props);
   return(
         <span className={props.className}>
             <svg xmlns="http://www.w3.org/2000/svg" width={props.size} height={props.size} viewBox="0 0 24 24" fill={props.color} >
@@ -15,5 +17,12 @@ function CurrencyIconCustom(props)
         </span>
   );
 }
+
+CurrencyIconCustom.propTypes =  { 
+  className: PropTypes.string,
+  color: PropTypes.string,
+  size: PropTypes.string
+}
+
 
 export default CurrencyIconCustom;

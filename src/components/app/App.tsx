@@ -3,7 +3,10 @@ import AppHeader from '../app-header/AppHeader';
 import styles from './App.module.css';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
-//import Modal from '../modal/Modal';
+import ModalOverlay from '../modal-overlay/ModalOverlay';
+
+//import ModalOverlay from '../modal-overlay/ModalOverlay';
+
 import jsData from '../../utils/data.js';
 
 const API_PATH = "https://norma.nomoreparties.space/api/ingredients";
@@ -17,22 +20,24 @@ function App(){
       order: jsData.order
     }
   );
-  
+
+
   React.useEffect(
     ()=>
     {
       const getIngredientsData = async () => {
-        const res = await fetch(API_PATH);
-        const data = await res.json();
-        console.log(data);
-        setState({...state, ingredients:data.data});
+        try{
+          const res = await fetch(API_PATH);
+          const json = await res.json();
+          setState({...state, ingredients:json.data}); 
+        }catch (error){
+          console.log(error);
+        }
       };
       getIngredientsData();
     },
     []
   );
-
-
 
   return (
     <>
@@ -43,7 +48,7 @@ function App(){
           <BurgerConstructor {...state}/>
         </main>
       </div>
-      <div id="react-modals"></div>
+      <ModalOverlay />
     </>
   );
 
