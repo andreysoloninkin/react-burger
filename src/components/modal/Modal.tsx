@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import styles from './Modal.module.css';
-import {modalObserver} from '../modal-observer/ModalObserver';
+//import {modalObserver} from '../modal-observer/ModalObserver';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import ModalOverlay from '../modal-overlay/ModalOverlay';
 
 function Modal(props) {
-  //console.log(props);
-  const result = <>
+  //console.log('MODAL_PROPS',props.isOpen);
+  const result =
       <div className={`${styles.container} pt-10 pl-10 pr-10 pb-15`} onClick={(e)=>{e.stopPropagation()}}>
         <div className={`${styles.header} text text_type_main-large`}>
           <span>{props.title}</span>
@@ -17,8 +18,7 @@ function Modal(props) {
           {props.children}
         </div>
       </div>
-    </>
-
+      
   function pressKey(e){
     if(e.keyCode === 27) {
       props.onCloseRequest();
@@ -27,6 +27,16 @@ function Modal(props) {
 
   document.addEventListener("keydown", pressKey, false);
 
+  //const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    document.addEventListener("keydown", pressKey, false);
+    return () => {
+      document.removeEventListener("keydown", pressKey);
+    }
+  }, []);  
+
+  /*
   React.useEffect(() => {
     if (props.isOpen) {
       modalObserver.setValue([props.isOpen, result, props.onCloseRequest]);
@@ -34,19 +44,31 @@ function Modal(props) {
       modalObserver.setValue([props.isOpen, null, () => {}]);
     }
   }, [props.isOpen]);
+  */
 
-  /*return ReactDOM.createPortal(
-    children,
-    document.getElementById('modal')!
-  );*/
-  return <></>;
+  return ReactDOM.createPortal(
+    <ModalOverlay 
+      id={props.id} 
+      isOpen={props.isOpen} 
+      onClick={() => {
+        //setIsOpen(false);
+        props.onCloseRequest();
+        console.log('#');
+      }}
+      >
+      {result}
+    </ModalOverlay>,
+    document.getElementById('modal-root')!
+  );
+  //return <></>;
   // console.log(document.getElementById('modal'));
 }
 
 Modal.propTypes = {
-  children: PropTypes.node,
-  isOpen: PropTypes.bool,
-  onCloseRequest: PropTypes.func,
+  id: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  onCloseRequest: PropTypes.func.isRequired,
   title: PropTypes.string
 }
 

@@ -8,7 +8,7 @@ function IngredientDetails(props) {
     const item = props.item;
     return <>
 
-                <div className={styles.pic}><img src={item?item['image_large']:''} /></div>
+                <div className={styles.pic}><img src={item?item['image_large']:''} alt={item?item['name']:''}/></div>
                 <div className={`${styles.title} text text_type_main-medium mt-4 mb-8`}>{item?item['name']:''}</div>
                 <div className={`${styles.specs}`}>
                 <div className={`${styles.specs_item} mr-5`}>
@@ -33,7 +33,7 @@ function IngredientDetails(props) {
   }
   
 IngredientDetails.propTypes = {
-    close:PropTypes.func,
+    /*close:PropTypes.func,*/
     item:PropTypes.shape({
         _id:PropTypes.string,
         name: PropTypes.string,

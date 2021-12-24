@@ -3,7 +3,7 @@ import AppHeader from '../app-header/AppHeader';
 import styles from './App.module.css';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
-import ModalOverlay from '../modal-overlay/ModalOverlay';
+//import ModalOverlay from '../modal-overlay/ModalOverlay';
 
 //import ModalOverlay from '../modal-overlay/ModalOverlay';
 
@@ -28,10 +28,15 @@ function App(){
       const getIngredientsData = async () => {
         try{
           const res = await fetch(API_PATH);
-          const json = await res.json();
-          setState({...state, ingredients:json.data}); 
+          if (res.ok) {
+            //console.log('APP_OK:',res);
+            const json = await res.json();
+            setState({...state, ingredients:json.data}); 
+          }else{
+            console.log('APP_ERROR:',res.statusText);
+          }
         }catch (error){
-          console.log(error);
+          console.log('APP_ERROR:',error);
         }
       };
       getIngredientsData();
@@ -40,7 +45,7 @@ function App(){
   );
 
   return (
-    <>
+    
       <div className={ styles.App }>
         <AppHeader />
         <main>
@@ -48,8 +53,7 @@ function App(){
           <BurgerConstructor {...state}/>
         </main>
       </div>
-      <ModalOverlay />
-    </>
+    
   );
 
 }

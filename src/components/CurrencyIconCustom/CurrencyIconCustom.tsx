@@ -1,4 +1,4 @@
-import React from 'react';
+//import React from 'react';
 import PropTypes from 'prop-types';
 
 function CurrencyIconCustom(props)
@@ -19,9 +19,9 @@ function CurrencyIconCustom(props)
 }
 
 CurrencyIconCustom.propTypes =  { 
-  className: PropTypes.string,
-  color: PropTypes.string,
-  size: PropTypes.string
+  className: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+  size: PropTypes.string.isRequired
 }
 
 

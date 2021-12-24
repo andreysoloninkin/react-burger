@@ -14,7 +14,7 @@ const jsData = {
          "image_large":"https://code.s3.yandex.net/react/code/bun-02-large.png",
          "__v":0      
       },
-      {
+      /*{
          "_id":"60666c42cc7b410027a1a9b5",
          "name":"Говяжий метеорит (отбивная)",
          "type":"main",
@@ -323,7 +323,7 @@ const jsData = {
          "image_mobile":"https://code.s3.yandex.net/react/code/cheese-mobile.png",
          "image_large":"https://code.s3.yandex.net/react/code/cheese-large.png",
          "__v":0
-      },
+      },*/
       {
          "_id":"60666c42cc7b410027a1a9b2",
          "name":"Флюоресцентная булка R2-D3",

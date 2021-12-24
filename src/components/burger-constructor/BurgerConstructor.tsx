@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import typeIngredient from '../../utils/type.js';
 import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
 import {DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Button} from '@ya.praktikum/react-developer-burger-ui-components';
-import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+//import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import CurrencyIconCustom from '../CurrencyIconCustom/CurrencyIconCustom';
 import styles from './BurgerConstructor.module.css';
 import OrderDetails from '../order-details/OrderDetails';
@@ -56,43 +57,17 @@ function BurgerConstructor(props) {
         <Button type="primary" size="large" onClick={()=>{clickOrder()}}>Оформить заказ</Button>
       </div>
     </div>
-    <Modal isOpen={openOrderModal} onCloseRequest={() => {setOpenOrderModal(false);}} title="">
-      <OrderDetails items={items} close={() => {setOpenOrderModal(false); }}/>
+    <Modal id="modal_order" isOpen={openOrderModal} onCloseRequest={() => {setOpenOrderModal(false);}} title="">
+      <OrderDetails items={items} /*close={() => {setOpenOrderModal(false); }}*/  />
     </Modal>
     </>
   );
 }
 
 BurgerConstructor.propTypes =  { 
-  tab: PropTypes.string,
-  ingredients: PropTypes.shape({
-      _id:PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      calories: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      image:PropTypes.string,
-      image_large:PropTypes.string,
-      image_mobile:PropTypes.string,
-      price:PropTypes.number,
-      __v:PropTypes.number
-    }),
-  order: PropTypes.shape({
-    _id:PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    calories: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    image:PropTypes.string,
-    image_large:PropTypes.string,
-    image_mobile:PropTypes.string,
-    price:PropTypes.number,
-    __v:PropTypes.number
-  })
+  tab: PropTypes.string.isRequired,
+  ingredients: PropTypes.arrayOf(typeIngredient),
+  order: PropTypes.arrayOf(typeIngredient)
 }
 
 export default BurgerConstructor;

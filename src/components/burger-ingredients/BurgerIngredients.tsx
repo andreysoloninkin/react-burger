@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
+import typeIngredient from '../../utils/type.js';
+//import ReactDOM from 'react-dom';
 import styles from './BurgerIngredients.module.css';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientItem from '../burger-ingredients-item/IngredientItem';
@@ -18,7 +19,7 @@ function BurgerIngredients(props) {
   function clickTab(e){
     //alert("!");
     //console.log(e);    
-    setCurrent(e);
+    //setCurrent(e);
     document.getElementById(e+"-list")?.scrollIntoView({
       behavior: 'smooth',
       block: 'start'
@@ -26,7 +27,7 @@ function BurgerIngredients(props) {
   }
 
   function clickItem(el){
-    console.log(el);
+    //console.log(el);
     setModalItem(el);
   }
 /*
@@ -94,8 +95,8 @@ function BurgerIngredients(props) {
             )}
           </div>
         </div>
-        <Modal isOpen={modalItem?true:false} onCloseRequest={() => {setModalItem(null);}} title="Детали ингредиента">
-            <IngredientDetails item={modalItem} close={() => {setModalItem(null); }}/>
+        <Modal id="modal_item" isOpen={modalItem?true:false} onCloseRequest={() => {setModalItem(null);}} title="Детали ингредиента">
+            <IngredientDetails item={modalItem} /*close={() => {setModalItem(null); }}*/  />
         </Modal>
     </div>
   );
@@ -103,35 +104,9 @@ function BurgerIngredients(props) {
 
 
 BurgerIngredients.propTypes =  { 
-  tab: PropTypes.string,
-  ingredients: PropTypes.shape({
-      _id:PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      calories: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      image:PropTypes.string,
-      image_large:PropTypes.string,
-      image_mobile:PropTypes.string,
-      price:PropTypes.number,
-      __v:PropTypes.number
-    }),
-  order: PropTypes.shape({
-    _id:PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    calories: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    image:PropTypes.string,
-    image_large:PropTypes.string,
-    image_mobile:PropTypes.string,
-    price:PropTypes.number,
-    __v:PropTypes.number
-  })
+  tab: PropTypes.string.isRequired,
+  ingredients: PropTypes.arrayOf(typeIngredient),
+  order: PropTypes.arrayOf(typeIngredient)
 }
 
 
