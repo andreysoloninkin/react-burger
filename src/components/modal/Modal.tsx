@@ -2,12 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import styles from './Modal.module.css';
-//import {modalObserver} from '../modal-observer/ModalObserver';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/ModalOverlay';
 
 function Modal(props) {
-  //console.log('MODAL_PROPS',props.isOpen);
   const result =
       <div className={`${styles.container} pt-10 pl-10 pr-10 pb-15`} onClick={(e)=>{e.stopPropagation()}}>
         <div className={`${styles.header} text text_type_main-large`}>
@@ -25,43 +23,28 @@ function Modal(props) {
     }
   }
 
-  document.addEventListener("keydown", pressKey, false);
-
-  //const [isModalOpen, setIsModalOpen] = React.useState(false);
-
   React.useEffect(() => {
     document.addEventListener("keydown", pressKey, false);
     return () => {
       document.removeEventListener("keydown", pressKey);
     }
-  }, []);  
-
-  /*
-  React.useEffect(() => {
-    if (props.isOpen) {
-      modalObserver.setValue([props.isOpen, result, props.onCloseRequest]);
-    } else {
-      modalObserver.setValue([props.isOpen, null, () => {}]);
-    }
-  }, [props.isOpen]);
-  */
+  }, []); 
 
   return ReactDOM.createPortal(
-    <ModalOverlay 
-      id={props.id} 
-      isOpen={props.isOpen} 
-      onClick={() => {
-        //setIsOpen(false);
-        props.onCloseRequest();
-        console.log('#');
-      }}
-      >
-      {result}
-    </ModalOverlay>,
+    (
+      <ModalOverlay 
+        id={props.id} 
+        isOpen={props.isOpen} 
+        onClick={() => {
+          props.onCloseRequest();
+          console.log('#');
+        }}
+        >
+        {result}
+      </ModalOverlay>
+    ),
     document.getElementById('modal-root')!
   );
-  //return <></>;
-  // console.log(document.getElementById('modal'));
 }
 
 Modal.propTypes = {

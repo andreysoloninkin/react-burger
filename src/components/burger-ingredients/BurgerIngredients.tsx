@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import typeIngredient from '../../utils/type.js';
-//import ReactDOM from 'react-dom';
 import styles from './BurgerIngredients.module.css';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientItem from '../burger-ingredients-item/IngredientItem';
@@ -10,16 +9,11 @@ import Modal from '../modal/Modal';
 
 
 function BurgerIngredients(props) {
-  //console.log('BurgerIngredients');
-  //console.log(props.ingredients);
   const [modalItem, setModalItem] = React.useState(null);
-  //const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [current, setCurrent] = React.useState(props.tab);
   
   function clickTab(e){
-    //alert("!");
-    //console.log(e);    
-    //setCurrent(e);
+    setCurrent(e);
     document.getElementById(e+"-list")?.scrollIntoView({
       behavior: 'smooth',
       block: 'start'
@@ -27,45 +21,10 @@ function BurgerIngredients(props) {
   }
 
   function clickItem(el){
-    //console.log(el);
     setModalItem(el);
   }
-/*
-  function showModal(el)
-  {
-    //const modalRoot = document.getElementById("modal-root")!;
-    console.log("SHOW", el);
-    //setIsModalOpen(true);
-
-  }
-
-  function hideItem(el){
-    console.log("HIDE", el);
-    //setIsModalOpen(false);
-  }
-
-  React.useEffect(()=>{
-    if(modalItem)
-    {
-      showModal(modalItem)
-    }
-    else
-    {
-      hideItem(modalItem);
-    }
-  },[modalItem])
-*/
 
   const items = props.ingredients;
-
-
-  
-  //const modalRoot = document.getElementById("react-modals")!;
-/*
-  function openModal() {
-    //setIsModalOpen(true);
-  }  
-*/
 
   return (
     <div className={`${styles.Burger_ingredients} pt-10 pb-10`}>
@@ -96,18 +55,16 @@ function BurgerIngredients(props) {
           </div>
         </div>
         <Modal id="modal_item" isOpen={modalItem?true:false} onCloseRequest={() => {setModalItem(null);}} title="Детали ингредиента">
-            <IngredientDetails item={modalItem} /*close={() => {setModalItem(null); }}*/  />
+            <IngredientDetails item={modalItem} />
         </Modal>
     </div>
   );
 }
-
 
 BurgerIngredients.propTypes =  { 
   tab: PropTypes.string.isRequired,
   ingredients: PropTypes.arrayOf(typeIngredient),
   order: PropTypes.arrayOf(typeIngredient)
 }
-
 
 export default BurgerIngredients;

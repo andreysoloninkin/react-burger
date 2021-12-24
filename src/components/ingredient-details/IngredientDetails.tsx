@@ -1,13 +1,10 @@
 import PropTypes from 'prop-types';
 import styles from './IngredientDetails.module.css';
 
-
-
 function IngredientDetails(props) {
-    //console.log(props);
     const item = props.item;
-    return <>
-
+    return (
+        <>
                 <div className={styles.pic}><img src={item?item['image_large']:''} alt={item?item['name']:''}/></div>
                 <div className={`${styles.title} text text_type_main-medium mt-4 mb-8`}>{item?item['name']:''}</div>
                 <div className={`${styles.specs}`}>
@@ -28,12 +25,11 @@ function IngredientDetails(props) {
                     <span className="text text_type_digits-default">{item?item['carbohydrates']:'-'}</span>
                 </div>
                 </div>
- 
-    </>;
+        </>
+    );
   }
   
 IngredientDetails.propTypes = {
-    /*close:PropTypes.func,*/
     item:PropTypes.shape({
         _id:PropTypes.string,
         name: PropTypes.string,

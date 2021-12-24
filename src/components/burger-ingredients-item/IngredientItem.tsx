@@ -1,17 +1,11 @@
-//import React from 'react';
 import PropTypes from 'prop-types';
 import typeIngredient from '../../utils/type.js';
-//import ReactDOM from 'react-dom';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Counter} from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './IngredientItem.module.css';
 
-
 function IngredientItem(props){
-
-  //console.log(props);
   return (
-    
       <div className={`${props.className} ${styles.ingredient_item}`} onClick={props.onClick}>
           <Counter count={1} size="default" />
           <div className={`${styles.ingredient_pic} ml-4 mr-4 mb-1`}><img src={props.image} alt={props.name}/></div>
@@ -21,7 +15,6 @@ function IngredientItem(props){
           </div>
           <div className={styles.ingredient_title}>{props.name}</div>
       </div>
-    
   );
 }
 
