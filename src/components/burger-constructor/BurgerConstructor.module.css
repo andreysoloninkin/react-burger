@@ -1,0 +1,40 @@
+.Burger_constructor{
+    width:600px;
+    height:calc(100% - 100px);
+    /*border:1px dotted #61dafb;*/
+    text-align: left;
+  }
+  
+.constructor_list{
+    /*border:1px dotted red;*/
+    width: 100%;
+    height: calc(100% - 340px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    /*display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;*/
+}
+.constructor_item{
+    /*position:relative;*/
+    /*border:1px dotted yellow;*/
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.constructor_item.dragable{
+
+}
+
+.constructor_item .drag_space{
+    display:block;
+    width:32px;
+}
+
+.constructor_total{
+    display:flex;
+    align-items: center;
+    justify-content: flex-end;
+}

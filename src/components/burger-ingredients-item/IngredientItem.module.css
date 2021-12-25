@@ -1,0 +1,30 @@
+.ingredient_item{
+    width:272px;
+    min-height:208px;
+    /*border:1px dotted green;*/
+    position:relative;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.ingredient_price{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.ingredient_title{
+    text-align: center;
+    height:48px;
+    text-overflow: ellipsis;
+}
+.ingredient_pic{
+    
+}
+
+.overlay{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-color:red;
+    z-index:1000
+}
