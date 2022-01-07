@@ -1,11 +1,15 @@
+import React from 'react';
 import styles from './OrderDetails.module.css';
 import status_icon from '../../images/status_icon.png';
+import { AppContext } from '../app/appContext.js';
 
 
 function OrderDetails() {
+    const [state, changeState] = React.useContext(AppContext);
+
     return (
       <>
-        <div className={`${styles.title} text text_type_digits-large`}>{'034536'}</div>
+        <div className={`${styles.title} text text_type_digits-large`}>{state.orderid}</div>
         <div className={`${styles.title_desc} text text_type_main-medium mt-8`}>идентификатор заказа</div>
         <div className={`${styles.status_icon} mt-15 mb-15`}>
             <img src={status_icon} alt="OK"/>

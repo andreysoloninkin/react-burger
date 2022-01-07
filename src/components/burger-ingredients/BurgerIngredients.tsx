@@ -1,16 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import typeIngredient from '../../utils/type.js';
 import styles from './BurgerIngredients.module.css';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
+import { AppContext } from '../app/appContext.js';
 import IngredientItem from '../burger-ingredients-item/IngredientItem';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 import Modal from '../modal/Modal';
 
 
-function BurgerIngredients(props) {
+function BurgerIngredients() {
+  const [state, changeState] = React.useContext(AppContext);
+
   const [modalItem, setModalItem] = React.useState(null);
-  const [current, setCurrent] = React.useState(props.tab);
+  const [current, setCurrent] = React.useState(state.tab);//props.tab
   
   function clickTab(e){
     setCurrent(e);
@@ -24,7 +25,7 @@ function BurgerIngredients(props) {
     setModalItem(el);
   }
 
-  const items = props.ingredients;
+  const items = state.ingredients; //props.ingredients;
 
   return (
     <div className={`${styles.Burger_ingredients} pt-10 pb-10`}>
@@ -59,12 +60,6 @@ function BurgerIngredients(props) {
         </Modal>
     </div>
   );
-}
-
-BurgerIngredients.propTypes =  { 
-  tab: PropTypes.string.isRequired,
-  ingredients: PropTypes.arrayOf(typeIngredient),
-  order: PropTypes.arrayOf(typeIngredient)
 }
 
 export default BurgerIngredients;
