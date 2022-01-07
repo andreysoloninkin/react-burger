@@ -10,10 +10,10 @@ function IngredientItem(props){
           <Counter count={1} size="default" />
           <div className={`${styles.ingredient_pic} ml-4 mr-4 mb-1`}><img src={props.image} alt={props.name}/></div>
           <div className={`${styles.ingredient_price} mb-1`}>
-            <span className="text text_type_main-medium mr-1">{props.price}</span>
+            <span className="text text_type_digits-default mr-1">{props.price}</span>
             <CurrencyIcon type="primary" />
           </div>
-          <div className={styles.ingredient_title}>{props.name}</div>
+          <div className={`${styles.ingredient_title} text text_type_main-default`}>{props.name}</div>
       </div>
   );
 }

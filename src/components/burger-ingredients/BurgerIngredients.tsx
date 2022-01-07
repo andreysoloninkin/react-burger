@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './BurgerIngredients.module.css';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
-import { AppContext } from '../app/appContext.js';
+import { AppContext } from '../../services/appContext.js';
 import IngredientItem from '../burger-ingredients-item/IngredientItem';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 import Modal from '../modal/Modal';

@@ -4,11 +4,10 @@ import {DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import CurrencyIconCustom from '../CurrencyIconCustom/CurrencyIconCustom';
 import styles from './BurgerConstructor.module.css';
-import { AppContext } from '../app/appContext.js';
+import { AppContext } from '../../services/appContext.js';
+import { API_PATH } from '../../utils/api.js';
 import OrderDetails from '../order-details/OrderDetails';
 import Modal from '../modal/Modal';
-
-const API_ORDER_ID_PATH = 'https://norma.nomoreparties.space/api/orders';
 
 function BurgerConstructor() {
 
@@ -20,7 +19,7 @@ function BurgerConstructor() {
     let data = {ingredients: state.order.map((item)=>item._id)};
     console.log('data=', JSON.stringify(data));
     try{
-      const res = await fetch(API_ORDER_ID_PATH, {method: 'POST', mode: 'cors', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'}});
+      const res = await fetch(API_PATH+"orders", {method: 'POST', mode: 'cors', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'}});
       if (res.ok) {
         const json = await res.json();
         changeState({type:"orderid", data:json});

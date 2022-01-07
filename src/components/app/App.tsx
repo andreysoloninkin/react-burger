@@ -1,13 +1,12 @@
 import React from 'react';
 import AppHeader from '../app-header/AppHeader';
 import styles from './App.module.css';
-import { AppContext } from './appContext.js';
+import { AppContext } from '../../services/appContext.js';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
 import jsData from '../../utils/data.js';
+import { API_PATH } from '../../utils/api.js';
 
-
-const API_PATH = "https://norma.nomoreparties.space/api/ingredients";
 
 function App(){
 
@@ -92,7 +91,7 @@ function App(){
     {
       const getIngredientsData = async () => {
         try{
-          const res = await fetch(API_PATH);
+          const res = await fetch(API_PATH+"ingredients");
           if (res.ok) {
             const json = await res.json();
             stateDispatch({type:"init", data:json.data}); 

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './OrderDetails.module.css';
 import status_icon from '../../images/status_icon.png';
-import { AppContext } from '../app/appContext.js';
+import { AppContext } from '../../services/appContext.js';
 
 
 function OrderDetails() {
