@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import styles from './IngredientDetails.module.css';
+import typeIngredient from '../../utils/type.js';
 
 function IngredientDetails(props) {
     const item = props.item;
@@ -30,20 +30,7 @@ function IngredientDetails(props) {
   }
   
 IngredientDetails.propTypes = {
-    item:PropTypes.shape({
-        _id:PropTypes.string,
-        name: PropTypes.string,
-        type: PropTypes.string,
-        proteins: PropTypes.number,
-        fat: PropTypes.number,
-        calories: PropTypes.number,
-        carbohydrates: PropTypes.number,
-        image:PropTypes.string,
-        image_large:PropTypes.string,
-        image_mobile:PropTypes.string,
-        price:PropTypes.number,
-        __v:PropTypes.number
-      })
+    item:typeIngredient
 }
 
 export default IngredientDetails;

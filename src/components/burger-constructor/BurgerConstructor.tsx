@@ -69,9 +69,9 @@ function BurgerConstructor() {
           <Button type="primary" size="large" onClick={()=>{clickOrder()}}>Оформить заказ</Button>
         </div>
       </div>
-      <Modal id="modal_order" isOpen={openOrderModal} onCloseRequest={() => {setOpenOrderModal(false);}} title="">
+      {openOrderModal && (<Modal id="modal_order" isOpen={openOrderModal} onCloseRequest={() => {setOpenOrderModal(false);}} title="">
         <OrderDetails /*items={items}*/  />
-      </Modal>
+      </Modal>)}
     </>
   );
 }
