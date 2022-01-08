@@ -36,8 +36,7 @@ function BurgerConstructor() {
     setOpenOrderModal(true);
   }
 
-  const items = state.order; //props.order;
-
+  const items = state.order;
   const itemtop = items.filter((item)=>(item.type==="bun"))[0];
   const itembot = itemtop;
 

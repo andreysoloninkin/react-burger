@@ -25,7 +25,7 @@ function BurgerIngredients() {
     setModalItem(el);
   }
 
-  const items = state.ingredients; //props.ingredients;
+  const items = state.ingredients;
 
   return (
     <div className={`${styles.Burger_ingredients} pt-10 pb-10`}>

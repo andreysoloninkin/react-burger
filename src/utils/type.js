@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const typeIngredient = PropTypes.shape({
+export const typeIngredient = PropTypes.shape({
     _id:PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
@@ -15,4 +15,17 @@ const typeIngredient = PropTypes.shape({
     __v:PropTypes.number
   });
 
-  export default typeIngredient;
+export const typeAppState = PropTypes.shape({ 
+    tab: PropTypes.string,
+    ingredients: PropTypes.arrayOf(typeIngredient),
+    order: PropTypes.arrayOf(typeIngredient),
+    total: PropTypes.number,
+    orderid: PropTypes.string
+  });
+
+export const typeAppAction = PropTypes.shape({ 
+    type: PropTypes.string,
+    data: PropTypes.any
+  }); 
+
+  export default typeAppState;
