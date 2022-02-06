@@ -1,18 +1,23 @@
 import React from 'react';
 import AppHeader from '../app-header/AppHeader';
+
 import styles from './App.module.css';
 import { AppContext } from '../../services/appContext.js';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
 import jsData from '../../utils/data.js';
 import { API_PATH } from '../../utils/api.js';
+import { useSelector, useDispatch } from 'react-redux';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
+import { SET_INGREDIENTS } from '../../services/actions';
 
 const ingredientsInitialState = [];
 
 const appInitalState = { 
   tab: "bun",
   ingredients: ingredientsInitialState,
-  order: jsData.order,
+  order: [], //jsData.order,
   total: 0,
   orderid: "0"
 };
@@ -42,8 +47,11 @@ function changeState(state, action){
 
 function App(){
 
-  const appState = React.useReducer(changeState, appInitalState)
+  const dispatch = useDispatch();
 
+  ///*
+  const appState = React.useReducer(changeState, appInitalState)
+  ///*
   const [state, stateDispatch] = appState;
 
   React.useEffect(
@@ -54,7 +62,9 @@ function App(){
           const res = await fetch(API_PATH+"ingredients");
           if (res.ok) {
             const json = await res.json();
+            ///*
             stateDispatch({type:"init", data:json.data}); 
+            dispatch({type: SET_INGREDIENTS, data:json.data});
           }else{
             console.log('APP_ERROR:',res.statusText);
           }
@@ -66,16 +76,18 @@ function App(){
     },
     []
   );
-
+  
+  //<AppContext.Provider value={appState}>
+  //</AppContext.Provider>
 
   return (
       <div className={ styles.App }>
         <AppHeader />
         <main>
-          <AppContext.Provider value={appState}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </AppContext.Provider>
+          <DndProvider backend={HTML5Backend}>
+              <BurgerIngredients />
+              <BurgerConstructor />
+          </DndProvider>          
         </main>
       </div>
   );

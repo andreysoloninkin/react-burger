@@ -2,14 +2,17 @@ import React from 'react';
 import styles from './OrderDetails.module.css';
 import status_icon from '../../images/status_icon.png';
 import { AppContext } from '../../services/appContext.js';
-
+import { RootStateOrAny, useSelector } from 'react-redux';
 
 function OrderDetails() {
-    const [state, changeState] = React.useContext(AppContext);
+    //const [state, changeState] = React.useContext(AppContext);
+    //@ts-ignore
+    const order = useSelector(state => state.order);
+    const orderid = 0;
 
     return (
       <>
-        <div className={`${styles.title} text text_type_digits-large`}>{state.orderid}</div>
+        <div className={`${styles.title} text text_type_digits-large`}>{orderid}</div>
         <div className={`${styles.title_desc} text text_type_main-medium mt-8`}>идентификатор заказа</div>
         <div className={`${styles.status_icon} mt-15 mb-15`}>
             <img src={status_icon} alt="OK"/>
