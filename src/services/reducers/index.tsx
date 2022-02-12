@@ -1,13 +1,14 @@
 //import React from 'react';
 //import { createStore } from 'redux';
 import { API_PATH } from '../../utils/api';
-import { CHANGE_SORT, SET_TAB, GET_INGREDIENTS, SET_INGREDIENTS, ADD_INGREDIENT, DEL_INGREDIENT, GET_CONSTRUCTOR, GET_ORDER, SET_ORDER, OPEN_MODAL, CLOSE_MODAL } from '../actions';
+import { CHANGE_SORT, SET_TAB, SET_INGREDIENTS, ADD_INGREDIENT, DEL_INGREDIENT, GET_CONSTRUCTOR, GET_ORDER, CLEAR_ORDER, SET_ORDER, OPEN_MODAL, OPEN_MODAL_ORDER, CLOSE_MODAL, CLOSE_MODAL_ORDER } from '../actions';
 
 const initialState = { 
     tab: "bun",
     ingredients: [],
     constructor: {bun:[],items:[]},
     modal: null,
+    modalOrder: false,
     order: {}
 };
 
@@ -17,24 +18,7 @@ export const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ingredients: action.data
-            }        
-        case GET_INGREDIENTS: 
-            fetch(API_PATH+"ingredients")
-                .then( res=> {
-                    if (res && res.ok) {
-                        return {
-                            ...state,
-                            ingredients: res.json
-                        }
-                    } else {
-                        console.log('APP_ERROR:',res.statusText);
-                        return state;
-                    }
-                }).catch (error => {
-                    console.log('APP_ERROR:',error);
-                    return state;
-                });
-            break;
+            }       
         case ADD_INGREDIENT:
             //@ts-ignore
             if(action.item.type === "bun" && state.constructor.bun.length>0)
@@ -102,11 +86,21 @@ export const rootReducer = (state = initialState, action) => {
                 ...state,
                 modal: action.item
             }
+        case OPEN_MODAL_ORDER:
+            return {
+                ...state,
+                modalOrder: true
+            }            
         case CLOSE_MODAL:
             return {
                 ...state,
                 modal: null
-            }                       
+            }   
+        case CLOSE_MODAL_ORDER:
+            return {
+                ...state,
+                modalOrder: false
+            }                                 
         case SET_TAB:
             return {
                 ...state,
@@ -115,8 +109,15 @@ export const rootReducer = (state = initialState, action) => {
         case SET_ORDER:
             return {
                 ...state,
+                //constructor:{},
                 order: action.data
             }
+        case CLEAR_ORDER:
+            return {
+                ...state,
+                //constructor:{},
+                order: {}
+            }            
         /*case GET_ORDER:
             return {
                 ...state,

@@ -2,9 +2,11 @@ import styles from './BurgerConstructorItem.module.css';
 import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
 import {DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
-import { CHANGE_SORT, ADD_INGREDIENT, DEL_INGREDIENT, GET_ORDER, SET_ORDER } from '../../services/actions';
+import { CHANGE_SORT, DEL_INGREDIENT } from '../../services/actions';
 import { useDrag, useDrop } from "react-dnd";
 import { useRef } from "react";
+import PropTypes from 'prop-types';
+import typeIngredient from '../../utils/type.js';
 
 function BurgerConstructorItem({item, index}) {
     const ref = useRef<HTMLDivElement>(null);
@@ -83,5 +85,11 @@ function BurgerConstructorItem({item, index}) {
 
 
 }
+
+
+BurgerConstructorItem.propTypes =  {
+    item: typeIngredient,
+    index: PropTypes.number
+  }
 
 export default BurgerConstructorItem;

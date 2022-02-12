@@ -11,7 +11,7 @@ import OrderDetails from '../order-details/OrderDetails';
 import Modal from '../modal/Modal';
 import { useDrop } from 'react-dnd';
 import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
-import { ADD_INGREDIENT, DEL_INGREDIENT, GET_ORDER, SET_ORDER, CHANGE_SORT } from '../../services/actions';
+import { ADD_INGREDIENT, CLEAR_ORDER, SET_ORDER, OPEN_MODAL_ORDER, CLOSE_MODAL_ORDER } from '../../services/actions';
 import { isTemplateMiddle } from 'typescript';
 
 function BurgerConstructor() {
@@ -20,21 +20,20 @@ function BurgerConstructor() {
   const bun:Array = useSelector(state => state.constructor.bun);
   //@ts-ignore
   const items:Array = useSelector(state => state.constructor.items);
-
-  //const items2 = items.map((item,i)=>item.type==="bun"?false:item);
-
-  //const [state, changeState] = React.useContext(AppContext);
-
-  const [openOrderModal, setOpenOrderModal] = React.useState(false);
+  //@ts-ignore
+  const order = useSelector(state => state.order);
+  //@ts-ignore
+  const openOrderModal = useSelector(state => state.modalOrder);
+  
+  //const [openOrderModal, setOpenOrderModal] = React.useState(false);
 
   const getOrderID = async () => {
     const data = bun.concat(items).map((item)=>(item._id));
-    //console.log('data=', JSON.stringify(data));
     try{
-      const res = await fetch(API_PATH+"orders", {method: 'POST', mode: 'cors', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'}});
+      const res = await fetch(API_PATH+"orders", {method: 'POST', mode: 'cors', body: JSON.stringify({"ingredients":data}), headers: {'Content-Type': 'application/json'}});
       if (res.ok) {
         const json = await res.json();
-        //changeState({type:"orderid", data:json});
+        //console.log(json);
         dispatch({type: SET_ORDER, data: json});
       }else{
         console.log('APP_ERROR1:',res);
@@ -45,7 +44,7 @@ function BurgerConstructor() {
   };
 
   function onDropHandler(item){
-    console.log('onDropHandler', item);
+    //console.log('onDropHandler', item);
     dispatch({
       type: ADD_INGREDIENT,
       item: item.item
@@ -61,18 +60,20 @@ function BurgerConstructor() {
 
 
   function clickOrder(){
-    getOrderID();
-    setOpenOrderModal(true);
+    dispatch({type:CLEAR_ORDER});
+    setTimeout(() => {getOrderID();}, 3000);
+    
+    //setOpenOrderModal(true);
+    dispatch({type:OPEN_MODAL_ORDER});
   }
 
   //const items = state.order;
   
-  const itemtop = bun[0];
-  //const itemtop = items[0];
+  const itemtop = (Array.isArray(bun) && bun.length>0)?bun[0]:false;
   const itembot = itemtop;
   let total = 0;
-    if (bun.length>0) total+=2*bun[0].price;
-    if (items.length > 0) total+= items.map((item)=>item.price).reduce((prev, curr)=>(prev+curr));
+    if (Array.isArray(bun) && bun.length>0) total+=2*bun[0].price;
+    if (Array.isArray(items) && items.length>0) total+= items.map((item)=>item.price).reduce((prev, curr)=>(prev+curr));
 
   return (
     <>
@@ -83,7 +84,10 @@ function BurgerConstructor() {
         </div>:``
         }
         <div className={`${styles.constructor_list} custom-scroll`} >
-          {items.map((item, i)=> <BurgerConstructorItem key={`citem_${i}`} item={item} index={i} /> )}        
+          {Array.isArray(items)?
+            items.map((item, i)=> <BurgerConstructorItem key={`citem_${i}`} item={item} index={i} /> ):
+            ``
+          }        
         </div>
 
         {itembot?
@@ -95,10 +99,15 @@ function BurgerConstructor() {
         <div className={`${styles.constructor_total} pt-10 pb-1 pr-4`}>
           <span className="text text_type_digits-medium mr-2">{total}</span>
           <CurrencyIconCustom size="32" color="#ffffff" className="mr-10"/>
-          <Button type="primary" size="large" onClick={()=>{clickOrder()}}>Оформить заказ</Button>
+           
+        {itemtop?
+          <Button type="primary" size="large" onClick={()=>{clickOrder()}}>Оформить заказ</Button>:
+          <Button type="primary" size="large" disabled>Оформить заказ</Button>
+        }
+           
         </div>
       </div>
-      {openOrderModal && (<Modal id="modal_order" isOpen={openOrderModal} onCloseRequest={() => {setOpenOrderModal(false);}} title="">
+      {openOrderModal && (<Modal id="modal_order" isOpen={openOrderModal} onCloseRequest={() => {dispatch({type:CLOSE_MODAL_ORDER});}} title="">
         <OrderDetails /*items={items}*/  />
       </Modal>)}
     </>

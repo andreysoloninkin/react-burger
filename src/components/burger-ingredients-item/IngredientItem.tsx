@@ -29,7 +29,6 @@ function IngredientItem(props){
 }
 
 IngredientItem.propTypes =  {
-  key: PropTypes.string,
   className: PropTypes.string,
   onClick: PropTypes.func,
   item: typeIngredient

@@ -19,7 +19,7 @@ function Modal(props) {
       
   React.useEffect(() => {
     function pressKey(e){
-      if(e.keyCode === 27) {
+      if(e.key === "Escape") {
         props.onCloseRequest();
       }
     }
