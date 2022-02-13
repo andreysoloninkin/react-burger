@@ -13,6 +13,7 @@ import { useDrop } from 'react-dnd';
 import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
 import { ADD_INGREDIENT, CLEAR_ORDER, SET_ORDER, OPEN_MODAL_ORDER, CLOSE_MODAL_ORDER } from '../../services/actions';
 import { isTemplateMiddle } from 'typescript';
+import { getOrderID } from '../../services/actions';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();  
@@ -27,23 +28,7 @@ function BurgerConstructor() {
   
   //const [openOrderModal, setOpenOrderModal] = React.useState(false);
 
-  const getOrderID = async () => {
-    const data = bun.concat(items).map((item)=>(item._id));
-    try{
-      const res = await fetch(API_PATH+"orders", {method: 'POST', mode: 'cors', body: JSON.stringify({"ingredients":data}), headers: {'Content-Type': 'application/json'}});
-      if (res.ok) {
-        const json = await res.json();
-        //console.log(json);
-        dispatch({type: SET_ORDER, data: json});
-      }else{
-        console.log('APP_ERROR1:',res);
-      }
-    }catch (error){
-      console.log('APP_ERROR2:',error);
-    }
-  };
-
-  function onDropHandler(item){
+ function onDropHandler(item){
     //console.log('onDropHandler', item);
     dispatch({
       type: ADD_INGREDIENT,
@@ -60,8 +45,11 @@ function BurgerConstructor() {
 
 
   function clickOrder(){
-    dispatch({type:CLEAR_ORDER});
-    setTimeout(() => {getOrderID();}, 3000);
+    
+    const data = bun.concat(items).map((item)=>(item._id));
+
+    //тайм-аут, чтобы увидеть загрузку
+    setTimeout(() => {getOrderID(dispatch, data);}, 2000);
     
     //setOpenOrderModal(true);
     dispatch({type:OPEN_MODAL_ORDER});

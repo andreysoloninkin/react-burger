@@ -1,19 +1,62 @@
 //import React from 'react';
 //import { createStore } from 'redux';
 import { API_PATH } from '../../utils/api';
-import { CHANGE_SORT, SET_TAB, SET_INGREDIENTS, ADD_INGREDIENT, DEL_INGREDIENT, GET_CONSTRUCTOR, GET_ORDER, CLEAR_ORDER, SET_ORDER, OPEN_MODAL, OPEN_MODAL_ORDER, CLOSE_MODAL, CLOSE_MODAL_ORDER } from '../actions';
+import { CHANGE_SORT, SET_TAB, SET_INGREDIENTS, ADD_INGREDIENT, DEL_INGREDIENT, GET_INGREDIENTS_START, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_FAILURE, GET_ORDER_START, GET_ORDER_SUCCESS, GET_ORDER_FAILURE, CLEAR_ORDER, SET_ORDER, OPEN_MODAL, OPEN_MODAL_ORDER, CLOSE_MODAL, CLOSE_MODAL_ORDER } from '../actions';
 
 const initialState = { 
     tab: "bun",
     ingredients: [],
+    ingredientsLoading: false,
+    ingredientsError: null,
     constructor: {bun:[],items:[]},
     modal: null,
     modalOrder: false,
-    order: {}
+    order: {},
+    orderLoading: false,
+    orderError: null
 };
 
 export const rootReducer = (state = initialState, action) => {
     switch (action.type) {
+        case GET_INGREDIENTS_START:
+            return {
+                ...state,
+                ingredientsLoading: true,
+                ingredientsError: null
+            }   
+        case GET_INGREDIENTS_SUCCESS:
+            return {
+                ...state,
+                ingredientsLoading: false,
+                ingredientsError: null,
+                ingredients: action.data
+            }                       
+        case GET_INGREDIENTS_FAILURE:
+            return {
+                ...state,
+                ingredientsLoading: false,
+                ingredientsError: action.error
+            } 
+        case GET_ORDER_START:
+            return {
+                ...state,
+                orderLoading: true,
+                orderError: null,
+                order: {}
+            }
+        case GET_ORDER_SUCCESS:
+            return {
+                ...state,
+                orderLoading: false,
+                orderError: null,
+                order: action.data
+            }
+        case GET_ORDER_FAILURE:
+            return {
+                ...state,
+                orderLoading: false,
+                orderError: action.payload.error
+            }                                
         case SET_INGREDIENTS:
             return {
                 ...state,
@@ -105,7 +148,7 @@ export const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 tab: action.tab
-            } 
+            }           
         case SET_ORDER:
             return {
                 ...state,

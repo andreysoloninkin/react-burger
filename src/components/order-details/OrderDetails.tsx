@@ -10,6 +10,7 @@ function OrderDetails() {
     //const [state, changeState] = React.useContext(AppContext);
     //@ts-ignore
     const order = useSelector(state => state.order);
+    
     let orderid = 0;
     if(order.order !== undefined) orderid = order.order.number;
     
