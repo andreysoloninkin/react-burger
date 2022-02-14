@@ -61,21 +61,21 @@ function BurgerIngredients() {
         <div className={`${styles.ingredients_list} custom-scroll`} id="ingredients-list" onScroll={scrollIngredientsList}>
           <p id="bun-list" className={`${styles.ingredients_category_title} text text_type_main-medium mt-10 mb-6`}>Булки</p>
           <div className={`${styles.ingredients_category_list}`}>
-              {items.filter(item => item.type==="bun").map((item, index)=>
+              {Array.isArray(items)?items.filter(item => item.type==="bun").map((item, index)=>
                 <IngredientItem key={item._id} className={index%2===0?`ml-4 mb-6`:`ml-6 mb-6`} item={{...item}} onClick={()=>{clickItem(item)}}/>
-              )}
+              ):``}
           </div>
           <p id="sauce-list" className="text text_type_main-medium mt-10 mb-6">Соусы</p>
           <div className={`${styles.ingredients_category_list}`}>
-          {items.filter(item => item.type==="sauce").map((item, index)=>
+          {Array.isArray(items)?items.filter(item => item.type==="sauce").map((item, index)=>
               <IngredientItem key={item._id} className={index%2===0?`ml-4 mb-6`:`ml-6 mb-6`} item={{...item}} onClick={()=>{clickItem(item)}}/>
-            )}
+            ):``}
           </div>
           <p id="main-list" className="text text_type_main-medium mt-10 mb-6">Начинки</p>
           <div className={styles.ingredients_category_list}>
-          {items.filter(item => item.type==="main").map((item, index)=>
+          {Array.isArray(items)?items.filter(item => item.type==="main").map((item, index)=>
               <IngredientItem key={item._id} className={index%2===0?`ml-4 mb-6`:`ml-6 mb-6`} item={{...item}} onClick={()=>{clickItem(item)}}/>
-            )}
+            ):``}
           </div>
         </div>
         {modalItem && (<Modal id="modal_item" isOpen={modalItem?true:false} onCloseRequest={() => {dispatch({type:CLOSE_MODAL});/*setModalItem(null);*/}} title="Детали ингредиента">

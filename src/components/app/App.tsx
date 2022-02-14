@@ -20,7 +20,7 @@ function App(){
 
   React.useEffect(
     ()=> { 
-      getIngredientsData(dispatch); 
+      dispatch(getIngredientsData()); 
     },
     []
   );

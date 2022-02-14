@@ -49,7 +49,7 @@ function BurgerConstructor() {
     const data = bun.concat(items).map((item)=>(item._id));
 
     //тайм-аут, чтобы увидеть загрузку
-    setTimeout(() => {getOrderID(dispatch, data);}, 2000);
+        setTimeout(() => {dispatch(getOrderID(data));}, 2000);
     
     //setOpenOrderModal(true);
     dispatch({type:OPEN_MODAL_ORDER});

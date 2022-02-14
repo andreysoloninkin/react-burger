@@ -4,7 +4,7 @@
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: #5c5c5c;/*rgba(0, 0, 0, 0.6);*/
+    background-color: rgba(200, 200, 200, 0.5);
     visibility: hidden;
     opacity: 0;
     display: flex;

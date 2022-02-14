@@ -22,41 +22,59 @@ export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const DEL_INGREDIENT = 'DEL_INGREDIENT';
 export const CHANGE_SORT = 'CHANGE_SORT';
 
-export  const getOrderID = async (dispatch, data) => {
-    try{
-        dispatch({type: GET_ORDER_START});
+export  const getOrderID = (data) => {
+    return (dispatch) => {
+        try
+        {
+            dispatch({type: GET_ORDER_START});
 
-        const res = await fetch(API_PATH+"orders", {method: 'POST', mode: 'cors', body: JSON.stringify({"ingredients":data}), headers: {'Content-Type': 'application/json'}});
-        if (res.ok) {
-            const json = await res.json();
-            //console.log(json);
-            dispatch({type: GET_ORDER_SUCCESS, data: json});
-        }else{
-            dispatch({type: GET_ORDER_FAILURE, error: res.statusText});
-            //console.log('APP_ERROR1:',res);
+            fetch(API_PATH+"orders", {method: 'POST', mode: 'cors', body: JSON.stringify({"ingredients":data}), headers: {'Content-Type': 'application/json'}})
+                .then(response => {
+                    if(response.ok !== true)
+                    {
+                        dispatch({type: GET_ORDER_FAILURE, error: response.status});
+                        return;
+                    }
+                    return response.json();
+                })
+                .then(obj=>{
+                    //console.log(response);
+                    dispatch({type: GET_ORDER_SUCCESS, data: obj});
+                });
         }
-    }catch (error){
-        //console.log('APP_ERROR2:',error);
-        dispatch({type: GET_ORDER_FAILURE, error: error});
+        catch (error)
+        {
+            //console.log('APP_ERROR2:',error);
+            dispatch({type: GET_ORDER_FAILURE, error: error});
+        }
     }
-  };
+};
 
-export const getIngredientsData = async (dispatch) => {
-    
-    try{
-        dispatch({type: GET_INGREDIENTS_START});
-        
-        const res = await fetch(API_PATH+"ingredients");
-        if (res.ok) {
-            const json = await res.json();
-            //throw new Error('ERROR!');
-            dispatch({type: GET_INGREDIENTS_SUCCESS, data: json.data});
-        }else{
-            //console.log('APP_ERROR:',res.statusText);
-            dispatch({type: GET_INGREDIENTS_FAILURE, error: res.statusText});
+export const getIngredientsData = () => {
+    return (dispatch) => {
+        try
+        {
+            dispatch({type: GET_INGREDIENTS_START});
+            
+            fetch(API_PATH+"ingredients")
+                .then(response => {
+                    if(response.ok !== true)
+                    {
+                        dispatch({type: GET_INGREDIENTS_FAILURE, error: response.status});
+                        return;
+                    }
+                    return response.json();
+                })
+                .then(obj => {
+                    //console.log(obj.data);
+                    //console.log(response.json());
+                    dispatch({type: GET_INGREDIENTS_SUCCESS, data: obj.data});
+                });
         }
-    }catch (error){
-        //console.log('APP_ERROR:',error);
-        dispatch({type: GET_INGREDIENTS_FAILURE, error: error});
+        catch (error)
+        {
+            //console.log('APP_ERROR:',error);
+            dispatch({type: GET_INGREDIENTS_FAILURE, error: error});
+        }
     }
-  };
+};

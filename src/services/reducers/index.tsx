@@ -55,7 +55,7 @@ export const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 orderLoading: false,
-                orderError: action.payload.error
+                orderError: action.error
             }                                
         case SET_INGREDIENTS:
             return {
