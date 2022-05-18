@@ -1,44 +1,81 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import typeIngredient from '../../utils/type.js';
+import {useCallback} from 'react';
+import BurgerConstructorItem from '../burger-constructor-item/BurgerConstructorItem';
 import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
-import {DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import CurrencyIconCustom from '../CurrencyIconCustom/CurrencyIconCustom';
 import styles from './BurgerConstructor.module.css';
+import { AppContext } from '../../services/appContext.js';
+import { API_PATH } from '../../utils/api.js';
 import OrderDetails from '../order-details/OrderDetails';
 import Modal from '../modal/Modal';
+import { useDrop } from 'react-dnd';
+import { RootStateOrAny, useSelector, useDispatch } from 'react-redux';
+import { ADD_INGREDIENT, CLEAR_ORDER, SET_ORDER, OPEN_MODAL_ORDER, CLOSE_MODAL_ORDER } from '../../services/actions';
+import { isTemplateMiddle } from 'typescript';
+import { getOrderID } from '../../services/actions';
 
-function BurgerConstructor(props) {
+function BurgerConstructor() {
+  const dispatch = useDispatch();  
+  //@ts-ignore
+  const bun:Array = useSelector(state => state.constructor.bun);
+  //@ts-ignore
+  const items:Array = useSelector(state => state.constructor.items);
+  //@ts-ignore
+  const order = useSelector(state => state.order);
+  //@ts-ignore
+  const openOrderModal = useSelector(state => state.modalOrder);
+  
+  //const [openOrderModal, setOpenOrderModal] = React.useState(false);
 
-  const [openOrderModal, setOpenOrderModal] = React.useState(false);
-
-  function clickOrder(){
-    setOpenOrderModal(true);
+ function onDropHandler(item){
+    //console.log('onDropHandler', item);
+    dispatch({
+      type: ADD_INGREDIENT,
+      item: item.item
+    });
   }
 
-  const items = props.order;
+  const [, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(item) {
+        onDropHandler(item);
+    },
+  });
 
-  const j = items.length;
 
-  const itemtop = items[0];
-  const itembot = items[j-1];
+  function clickOrder(){
+    
+    const data = bun.concat(items).map((item)=>(item._id));
+
+    //тайм-аут, чтобы увидеть загрузку
+        setTimeout(() => {dispatch(getOrderID(data));}, 2000);
+    
+    //setOpenOrderModal(true);
+    dispatch({type:OPEN_MODAL_ORDER});
+  }
+
+  //const items = state.order;
+  
+  const itemtop = (Array.isArray(bun) && bun.length>0)?bun[0]:false;
+  const itembot = itemtop;
+  let total = 0;
+    if (Array.isArray(bun) && bun.length>0) total+=2*bun[0].price;
+    if (Array.isArray(items) && items.length>0) total+= items.map((item)=>item.price).reduce((prev, curr)=>(prev+curr));
 
   return (
     <>
-      <div className={`${styles.Burger_constructor} ml-10 pt-25`}>
+      <div className={`${styles.Burger_constructor} ml-10 pt-25`} ref={dropTarget}>
         {itemtop?
         <div className={`${styles.constructor_item} mb-4 ml-4 mr-4`}><span className={styles.drag_space}></span>
           <ConstructorElement type="top" isLocked={true} text={`${itemtop.name} (верх)`} price={itemtop.price} thumbnail={itemtop.image} />
         </div>:``
         }
-        <div className={`${styles.constructor_list} custom-scroll`}>
-          {items.filter((item, i) => (i>0 && i<j-1)).map((item)=>
-                <div key={item._id} className={`${styles.constructor_item} dragable mb-4 ml-4 mr-2`}>
-                  <span className={styles.drag_space}><DragIcon type="primary" /></span>
-                  <ConstructorElement text={item.name} price={item.price} thumbnail={item.image} />
-                </div>    
-              )}        
+        <div className={`${styles.constructor_list} custom-scroll`} >
+          {Array.isArray(items)?
+            items.map((item, i)=> <BurgerConstructorItem key={`citem_${i}`} item={item} index={i} /> ):
+            ``
+          }        
         </div>
 
         {itembot?
@@ -48,22 +85,21 @@ function BurgerConstructor(props) {
         }
 
         <div className={`${styles.constructor_total} pt-10 pb-1 pr-4`}>
-          <span className="text text_type_digits-medium mr-2">12345</span>
+          <span className="text text_type_digits-medium mr-2">{total}</span>
           <CurrencyIconCustom size="32" color="#ffffff" className="mr-10"/>
-          <Button type="primary" size="large" onClick={()=>{clickOrder()}}>Оформить заказ</Button>
+           
+        {itemtop?
+          <Button type="primary" size="large" onClick={()=>{clickOrder()}}>Оформить заказ</Button>:
+          <Button type="primary" size="large" disabled>Оформить заказ</Button>
+        }
+           
         </div>
       </div>
-      <Modal id="modal_order" isOpen={openOrderModal} onCloseRequest={() => {setOpenOrderModal(false);}} title="">
+      {openOrderModal && (<Modal id="modal_order" isOpen={openOrderModal} onCloseRequest={() => {dispatch({type:CLOSE_MODAL_ORDER});}} title="">
         <OrderDetails /*items={items}*/  />
-      </Modal>
+      </Modal>)}
     </>
   );
-}
-
-BurgerConstructor.propTypes =  { 
-  tab: PropTypes.string.isRequired,
-  ingredients: PropTypes.arrayOf(typeIngredient),
-  order: PropTypes.arrayOf(typeIngredient)
 }
 
 export default BurgerConstructor;

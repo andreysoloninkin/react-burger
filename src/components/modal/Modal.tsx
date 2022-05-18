@@ -17,18 +17,17 @@ function Modal(props) {
         </div>
       </div>
       
-  function pressKey(e){
-    if(e.keyCode === 27) {
-      props.onCloseRequest();
-    }
-  }
-
   React.useEffect(() => {
+    function pressKey(e){
+      if(e.key === "Escape") {
+        props.onCloseRequest();
+      }
+    }
     document.addEventListener("keydown", pressKey, false);
     return () => {
       document.removeEventListener("keydown", pressKey);
     }
-  }, []); 
+  }, [props.onCloseRequest]); 
 
   return ReactDOM.createPortal(
     (
